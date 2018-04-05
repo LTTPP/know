@@ -10,15 +10,8 @@ const objectKey = 'sample.jpg';
 //ali.put(objectKey, '../assets/' + objectKey);
 
 // Convert file to base64 string and recognize
-function* recognize(objectKey) {
-    let b64str = yield ali.tobase64(objectKey);
-    let result = yield baidu.recognize(b64str);
+co(function* recognize() {
+    var b64str = yield ali.tobase64(objectKey);
+    var result = yield baidu.recognize(b64str);
     console.log(result);
-}
-
-var r = recognize(objectKey);
-r.next().value.then(function (b64str) {
-    return r.next(b64str).value;
-}).then(function (result) {
-    r.next(result);
 });
