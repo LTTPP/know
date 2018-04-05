@@ -3,7 +3,6 @@
 const ali = require('../alicloud/ali.services.tobase64.client');
 const baidu = require('../baidu-aip/baidu.services.imgrecog.client');
 const co = require('co');
-const thunkify = require('thunkify');
 
 const objectKey = 'sample.jpg';
 
@@ -11,8 +10,12 @@ const objectKey = 'sample.jpg';
 ali.put(objectKey, '../assets/' + objectKey);
 
 // Convert file to base64 string and recognize
-thunkify(ali.tobase64)(objectKey)(function (b64str) {
-    thunkify(baidu.recognize)(b64str)(function (result) {
+ali.tobase64(objectKey).then(function (b64str) {
+    baidu.recognize(b64str).then(function (result) {
         console.log(result);
+    }).catch(function (err) {
+        console.error(err);
     });
+}).catch(function (err) {
+    console.error(err);
 });

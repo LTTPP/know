@@ -26,18 +26,20 @@ const put = function (objectKey, pathToFile) {
     });
 };
 
-const tobase64 = function (objectKey, callback) {
-    let client = new FCClient(auth.ali.accountID, {
-        accessKeyID: auth.ali.accessKeyId,
-        accessKeySecret: auth.ali.accessKeySecret,
-        region: 'cn-beijing',
-        timeout: 10 * 1000 // 10s
-    });
-    let res = {key: objectKey};
-    return client.invokeFunction(serviceName, funcName, JSON.stringify(res)).then(function (resp) {
-        callback(resp.data);
-    }).catch(function (err) {
-        console.log(err);
+const tobase64 = function (objectKey) {
+    return new Promise((resolve, reject) => {
+        let client = new FCClient(auth.ali.accountID, {
+            accessKeyID: auth.ali.accessKeyId,
+            accessKeySecret: auth.ali.accessKeySecret,
+            region: 'cn-beijing',
+            timeout: 10 * 1000 // 10s
+        });
+        let res = {key: objectKey};
+        return client.invokeFunction(serviceName, funcName, JSON.stringify(res)).then(function (resp) {
+            resolve(resp.data);
+        }).catch(function (err) {
+            reject(err);
+        });
     });
 };
 
