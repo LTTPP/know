@@ -16,11 +16,9 @@ function* recognize(objectKey) {
     console.log(result);
 }
 
-let gen = recognize(objectKey);
-let result = gen.next();
-result.value.then(function (b64str) {
-    result = gen.next(b64str);
-    result.value.then(function (result) {
-        gen.next(result);
-    });
+var r = recognize(objectKey);
+r.next().value.then(function (b64str) {
+    return r.next(b64str).value;
+}).then(function (result) {
+    r.next(result);
 });
