@@ -7,15 +7,13 @@ const co = require('co');
 const objectKey = 'sample.jpg';
 
 // Upload picture to Ali OSS
-ali.put(objectKey, '../assets/' + objectKey);
+//ali.put(objectKey, '../assets/' + objectKey);
 
 // Convert file to base64 string and recognize
 ali.tobase64(objectKey).then(function (b64str) {
-    baidu.recognize(b64str).then(function (result) {
-        console.log(result);
-    }).catch(function (err) {
-        console.error(err);
-    });
+    return baidu.recognize(b64str);
+}).then(function (result) {
+    console.log(result);
 }).catch(function (err) {
     console.error(err);
 });
