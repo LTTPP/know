@@ -13,4 +13,4 @@ const objectKey = 'sample.jpg';
     let b64str = await ali.tobase64(objectKey);
     let result = await baidu.recognize(b64str);
     console.log(result);
-})();
+})().catch(err => console.error(err));
