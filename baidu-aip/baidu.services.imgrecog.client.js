@@ -26,7 +26,6 @@ const recognize = function (b64str) {
         reqt.write('image=' + image);
 
         reqt.on('error', (e) => {
-            console.error(e);
             reject(e);
         });
         reqt.end();

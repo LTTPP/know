@@ -1,8 +1,7 @@
 'use strict';
 
 const FCClient = require('@alicloud/fc2');
-const OSS = require('ali-oss');
-const co = require('co');
+const OSS = require('ali-oss').Wrapper;
 const auth = require('../auth/entication');
 
 const serviceName = 'Wit';
@@ -17,13 +16,8 @@ const put = function (objectKey, pathToFile) {
         bucket: bucket
     });
 
-    co(function* () {
-        ossclient.useBucket(bucket);
-        const result = yield ossclient.put(objectKey, pathToFile);
-        console.log(result);
-    }).catch(function (err) {
-        console.log(err);
-    });
+    ossclient.useBucket(bucket);
+    return ossclient.put(objectKey, pathToFile);
 };
 
 const tobase64 = function (objectKey) {

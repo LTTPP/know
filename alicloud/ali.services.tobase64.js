@@ -17,6 +17,7 @@ function fromOssObject(key, callback) {
     ossclient.get(key).then(function (res) {
         const buf = res.content;
         const b64str = buf.toString('base64');
+        ossclient.delete(key);
         callback(null, b64str);
     }).catch(function (err) {
         callback(err);
