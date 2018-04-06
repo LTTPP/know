@@ -2,7 +2,6 @@
 
 const ali = require('../alicloud/ali.services.tobase64.client');
 const baidu = require('../baidu-aip/baidu.services.imgrecog.client');
-const co = require('co');
 
 const objectKey = 'sample.jpg';
 
@@ -10,8 +9,8 @@ const objectKey = 'sample.jpg';
 //ali.put(objectKey, '../assets/' + objectKey);
 
 // Convert file to base64 string and recognize
-co(function* recognize() {
-    var b64str = yield ali.tobase64(objectKey);
-    var result = yield baidu.recognize(b64str);
+(async function () {
+    let b64str = await ali.tobase64(objectKey);
+    let result = await baidu.recognize(b64str);
     console.log(result);
-});
+})();
