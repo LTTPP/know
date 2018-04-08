@@ -1,3 +1,7 @@
 {
-  "navigationBarTitleText": "查看启动日志"
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "Logs",
+  "backgroundColor": "#0ff",
+  "backgroundTextStyle": "light"
 }
