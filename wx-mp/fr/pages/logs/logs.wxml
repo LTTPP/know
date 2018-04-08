@@ -1,8 +1,6 @@
 <!--logs.wxml-->
-<view class='container'>
+<view class="container log-list">
   <block wx:for="{{logs}}" wx:for-item="log">
-    <view class="logs">
-      <text>{{log}}</text>
-    </view>
+    <text class="log-item">{{log}}</text>
   </block>
 </view>
