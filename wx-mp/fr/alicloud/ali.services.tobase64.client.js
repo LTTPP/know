@@ -3,17 +3,10 @@
 const logger = require('../utils/logger.js');
 
 //更好的做法是把这些信息放到服务器进行签名，防止信息泄露
-const auth = require('../auth/entication.js');
-
-// reference https://github.com/peterhuang007/weixinFileToaliyun.git
-const base64 = require('../lib/base64.js');
-require('../lib/hmac.js');
-require('../lib/sha1.js');
-const crypto = require('../lib/crypto.js');
+const auth = require('./auth/orization.js');
 
 const region = 'oss-cn-beijing';
 const bucket = 'wit-bkt';
-const timeout = 87600;
 
 const uploadFile = function (pathToFile) {
     return new Promise((resolve, reject) => {
@@ -34,14 +27,14 @@ const uploadFile = function (pathToFile) {
             name: 'file',
             formData: {
                 'key': alicloudObjectKey,
-                'policy': policy(),
-                'OSSAccessKeyId': auth.ali.accessKeyId,
-                'signature': signature(),
+                'policy': auth.oss.policy,
+                'OSSAccessKeyId': auth.accessKeyId,
+                'signature': auth.oss.signature,
                 'success_action_status': '200',
             },
             success: function (res) {
                 if (res.statusCode !== 200) {
-                    reject(new Error('file upload failed ' + JSON.stringify(res)));
+                    reject(new Error('file upload fail ' + JSON.stringify(res)));
                     return;
                 }
                 logger.log('file upload success ' + JSON.stringify(res));
@@ -56,28 +49,34 @@ const uploadFile = function (pathToFile) {
 };
 
 const tobase64 = function (objectKey) {
+    let reqData = JSON.stringify({ key: '15243098117600.9993882890277408' });
     return new Promise((resolve, reject) => {
-        resolve('resp.data');
+        wx.request({
+            url: 'https://1996421133443888.cn-beijing.fc.aliyuncs.com/2016-08-15/services/Wit/functions/tobase64/invocations',
+            method: 'POST',
+            header: {
+                'Host': '1996421133443888.cn-beijing.fc.aliyuncs.com',
+                'Date': new Date().toGMTString(),
+                'Content-Type': 'application/json',
+                'Content-Length': reqData.length,
+                'Authorization': 'FC ' + auth.accessKeyId + ':' + auth.fc.signature
+            },
+            data: reqData,
+            success: resp => {
+                if (resp.statusCode !== 200) {
+                    logger.log('base64 encoding fail ' + JSON.stringify(resp));
+                    reject(new Error('base64 encoding fail ' + JSON.stringify(resp)));
+                    return;
+                }
+                logger.log('base64 encoding success ' + JSON.stringify(resp));
+                resolve(resp.data);
+            },
+            fail: function (err) {
+                logger.log('base64 encoding fail ' + JSON.stringify(err));
+                reject(err);
+            }
+        });
     });
-};
-
-const policy = function () {
-    let expiration = new Date();
-    expiration.setHours(expiration.getHours() + timeout);
-    const policy = {
-        "expiration": expiration.toISOString(), //设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
-        "conditions": [
-            ["content-length-range", 0, 5 * 1024 * 1024] // 设置上传文件的大小限制5MB
-        ]
-    };
-    return base64.encode(JSON.stringify(policy));
-};
-
-const signature = function () {
-    const bytes = crypto.HMAC(crypto.SHA1, policy(), auth.ali.accessKeySecret, {
-        asBytes: true
-    });
-    return crypto.util.bytesToBase64(bytes);
 };
 
 module.exports = {
