@@ -59,7 +59,7 @@ const tobase64 = function (objectKey) {
                 'Date': new Date().toGMTString(),
                 'Content-Type': 'application/json',
                 'Content-Length': reqData.length,
-                'Authorization': 'FC ' + auth.accessKeyId + ':' + auth.fc.signature
+                'Authorization': auth.fc.authorization
             },
             data: reqData,
             success: resp => {

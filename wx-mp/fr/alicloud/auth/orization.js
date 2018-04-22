@@ -6,9 +6,9 @@ require('../../lib/hmac.js');
 require('../../lib/sha1.js');
 const crypto = require('../../lib/crypto.js');
 
-const accountID = "1996421133443888";
-const accessKeyId = "LTAIF7t1uxGkw7Oy";
-const accessKeySecret = "VW5Od2goxM3D3azeIACLUnrycnqv9Q";
+const accountID = "accountID";
+const accessKeyId = "accessKeyId";
+const accessKeySecret = "accessKeySecret";
 
 const timeout = 87600;
 
@@ -47,6 +47,7 @@ module.exports = {
         signature: signature4Oss()
     },
     fc: {
-        signature: signature4Fc()
+        signature: signature4Fc(),
+        authorization: 'FC ' + accessKeyId + ':' + signature4Fc()
     }
 };
