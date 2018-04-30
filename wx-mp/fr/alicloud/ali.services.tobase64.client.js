@@ -20,7 +20,7 @@ const uploadFile = function (pathToFile) {
         }
 
         const alicloudObjectKey = new Date().getTime() + '' + Math.random();
-        logger.log('alicloud ObjectKey ' + alicloudObjectKey);
+        logger.log('alicloud ObjectKey', alicloudObjectKey);
         wx.uploadFile({
             url: `https://${bucket}.${region}.aliyuncs.com`,
             filePath: pathToFile,
@@ -32,16 +32,16 @@ const uploadFile = function (pathToFile) {
                 'signature': auth.oss.signature,
                 'success_action_status': '200',
             },
-            success: function (res) {
-                if (res.statusCode !== 200) {
-                    reject(new Error('file upload fail ' + JSON.stringify(res)));
-                    return;
+            success: function (resp) {
+                if (resp.statusCode !== 200) {
+                    logger.err('file upload fail', resp);
+                    return reject(resp);
                 }
                 logger.log('file upload success');
                 resolve(alicloudObjectKey);
             },
             fail: function (err) {
-                logger.log('file upload fail ' + JSON.stringify(err));
+                logger.err('file upload fail', err);
                 reject(err);
             }
         });
@@ -66,14 +66,14 @@ const tobase64 = function (objectKey) {
             data: reqData,
             success: resp => {
                 if (resp.statusCode !== 200) {
-                    logger.log('base64 encoding fail ' + JSON.stringify(resp));
+                    logger.err('base64 encoding fail', resp);
                     return reject(resp);
                 }
                 logger.log('base64 encoding success');
                 resolve(resp.data);
             },
             fail: function (err) {
-                logger.log('base64 encoding fail ' + JSON.stringify(err));
+                logger.err('base64 encoding fail', err);
                 reject(err);
             }
         });

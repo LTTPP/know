@@ -26,9 +26,9 @@ App({
                   code: res.code
                 }
               })*/
-              logger.log('code ' + res.code)
+              logger.log('code', res.code)
             } else {
-              logger.log('登录失败！' + res.errMsg)
+              logger.log('登录失败！', res.errMsg)
             }
           }
         })
@@ -39,13 +39,13 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          logger.log('res.authSetting ' + JSON.stringify(res.authSetting))
+          logger.log('res.authSetting',  res.authSetting)
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-              logger.log('user info ' + JSON.stringify(res.userInfo))
+              logger.log('user info', res.userInfo)
 
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况

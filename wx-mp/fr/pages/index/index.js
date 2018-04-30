@@ -26,11 +26,12 @@ Page({
     },
 
     work: function (res) {
-        logger.log(JSON.stringify(res));
+        logger.log('selected image', res);
         let pathToFile = res.tempFilePaths[0];
 
         const that = this;
 
+        /*
         // Ali upload file
         wx.showLoading({ title: '正在上传...', mask: true });
         ali.uploadFile(pathToFile).then(objectKey => {
@@ -49,8 +50,32 @@ Page({
                 result: result,
                 pathToPhoto: pathToFile
             });
-            logger.log(JSON.stringify(that.data));
+            logger.log('page index data', that.data);
         });
+        */
+
+        (async function () {
+            // Ali upload file
+            wx.showLoading({ title: '正在上传...', mask: true });
+            let objectKey = await ali.uploadFile(pathToFile);
+            wx.hideLoading();
+
+            // Ali base64 encoded
+            wx.showLoading({ title: '正在转码...', mask: true });
+            let b64str = await ali.tobase64(objectKey);
+            wx.hideLoading();
+
+            // Baidu recognize
+            wx.showLoading({ title: '正在识别...', mask: true });
+            let result = await baidu.recognize(b64str);
+            wx.hideLoading();
+
+            that.setData({
+                result: result,
+                pathToPhoto: pathToFile
+            });
+            logger.log('page index data', that.data);
+        })().catch(err => logger.err('ERROR', err));
     },
 
     showLogs: function () {
@@ -69,7 +94,7 @@ Page({
             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
             // 所以此处加入 callback 以防止这种情况
             app.userInfoReadyCallback = res => {
-                logger.log('user info ' + JSON.stringify(res.userInfo));
+                logger.log('user info' + res.userInfo);
                 this.setData({
                     userInfo: res.userInfo,
                     hasUserInfo: true
