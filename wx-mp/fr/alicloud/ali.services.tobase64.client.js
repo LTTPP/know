@@ -22,7 +22,7 @@ const uploadFile = function (pathToFile) {
         const alicloudObjectKey = new Date().getTime() + '' + Math.random();
         logger.log('alicloud ObjectKey ' + alicloudObjectKey);
         wx.uploadFile({
-            url: 'https://wit-bkt.oss-cn-beijing.aliyuncs.com',
+            url: `https://${bucket}.${region}.aliyuncs.com`,
             filePath: pathToFile,
             name: 'file',
             formData: {
@@ -49,18 +49,20 @@ const uploadFile = function (pathToFile) {
 };
 
 const tobase64 = function (objectKey) {
-    let reqData = JSON.stringify({ key: '15243098117600.9993882890277408' });
+    let reqData = JSON.stringify({key: objectKey});
+    let headers = {
+        'Host': '1996421133443888.cn-beijing.fc.aliyuncs.com',
+        'Date': new Date().toGMTString(),
+        'Content-Type': 'application/json',
+        'Content-Length': reqData.length
+    };
+    headers['Authorization'] = auth.fc.authorization('POST', '/2016-08-15/services/Wit/functions/tobase64/invocations', headers);
+
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://1996421133443888.cn-beijing.fc.aliyuncs.com/2016-08-15/services/Wit/functions/tobase64/invocations',
             method: 'POST',
-            header: {
-                'Host': '1996421133443888.cn-beijing.fc.aliyuncs.com',
-                'Date': new Date().toGMTString(),
-                'Content-Type': 'application/json',
-                'Content-Length': reqData.length,
-                'Authorization': auth.fc.authorization
-            },
+            header: headers,
             data: reqData,
             success: resp => {
                 if (resp.statusCode !== 200) {
