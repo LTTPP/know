@@ -37,7 +37,7 @@ const uploadFile = function (pathToFile) {
                     reject(new Error('file upload fail ' + JSON.stringify(res)));
                     return;
                 }
-                logger.log('file upload success ' + JSON.stringify(res));
+                logger.log('file upload success');
                 resolve(alicloudObjectKey);
             },
             fail: function (err) {
@@ -67,10 +67,9 @@ const tobase64 = function (objectKey) {
             success: resp => {
                 if (resp.statusCode !== 200) {
                     logger.log('base64 encoding fail ' + JSON.stringify(resp));
-                    reject(new Error('base64 encoding fail ' + JSON.stringify(resp)));
-                    return;
+                    return reject(resp);
                 }
-                logger.log('base64 encoding success ' + JSON.stringify(resp));
+                logger.log('base64 encoding success');
                 resolve(resp.data);
             },
             fail: function (err) {
