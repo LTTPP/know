@@ -77,7 +77,7 @@ const onResult = function (results) {
 };
 
 const normalize = function (name) {
-    return name.replace('洛阳', '').replace('红鸡蛋花', '鸡蛋花');
+    return name.replace('洛阳牡丹', '牡丹').replace('红鸡蛋花', '鸡蛋花');
 };
 
 const implies = function (results, name, self) {
