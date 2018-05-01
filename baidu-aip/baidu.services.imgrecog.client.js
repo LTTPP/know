@@ -19,7 +19,7 @@ const recognize = function (b64str) {
 
         let reqt = https.request(options, (resp) => {
             resp.on('data', (chunk) => {
-                let result = JSON.parse(chunk).result[0];
+                let result = JSON.parse(chunk).result;
                 resolve(result);
             });
         });
