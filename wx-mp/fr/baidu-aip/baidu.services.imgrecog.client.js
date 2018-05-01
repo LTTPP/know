@@ -36,15 +36,16 @@ const recognize = function (b64str) {
 
 const onResult = function (results) {
     if (results) {
+        if (!util.isArray(results)) {
+            return normalize(results.name);
+        }
         let result1 = results[0];
         if (result1.score >= 0.5) {
-            if (result1.score >= 0.5 && result1.score < 0.6) {
+            if (result1.score >= 0.5 && result1.score < 0.7) {
                 return `应该是${normalize(result1.name)}`;
-            } else if (result1.score >= 0.6 && result1.score < 9) {
-                return `应该是${normalize(result1.name)}没错`;
-            } else if (result1.score >= 0.9 && result1.score < 1) {
+            } else if (result1.score >= 0.7 && result1.score < 9) {
                 return `肯定是${normalize(result1.name)}`;
-            } else {
+            } else if (result1.score >= 0.9) {
                 return `无疑是${normalize(result1.name)}`;
             }
         } else if (result1.score >= 0.4) {
@@ -55,14 +56,7 @@ const onResult = function (results) {
                 }
                 return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}`;
             } else {
-                let values = [];
-                for (let i = 0; i < results.length; i++) {
-                    if (i === 1) {
-                        continue;
-                    }
-                    values.push(results[i].name);
-                }
-                if (util.imply(values, result2.name)) {
+                if (implies(results, result2.name, 1)) {
                     if (util.isSimilar(result1.name, result2.name)) {
                         return `应该是${normalize(result1.name)}`;
                     }
@@ -72,6 +66,9 @@ const onResult = function (results) {
             }
         } else {
             let result2 = results[1];
+            if (implies(results, result1.name, 0) && util.isSimilar(result1.name, result2.name)) {
+                return `应该是${normalize(result1.name)}`;
+            }
             return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}`;
         }
     } else {
@@ -81,6 +78,20 @@ const onResult = function (results) {
 
 const normalize = function (name) {
     return name.replace('洛阳', '').replace('红鸡蛋花', '鸡蛋花');
+};
+
+const implies = function (results, name, self) {
+    let values = [];
+    for (let i = 0; i < results.length; i++) {
+        if (i === self) {
+            continue;
+        }
+        values.push(results[i].name);
+    }
+    if (util.implies(values, name)) {
+        return true;
+    }
+    return false;
 };
 
 module.exports = {

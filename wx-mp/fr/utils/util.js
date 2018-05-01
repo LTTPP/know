@@ -1,5 +1,7 @@
 'use strict';
 
+const stringSimilarity = require('../lib/string-similarity/compare-strings.js');
+
 const formatTime = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
@@ -23,19 +25,25 @@ const isSimilar = (str1, str2) => {
     if (str2 && str2.includes(str1)) {
         return true;
     }
+    return stringSimilarity.compareTwoStrings(str1, str2) >= 0.5;
 }
 
-const imply = function (values, value) {
+const implies = function (values, value) {
     for (let i = 0; i < values.length; i++) {
-        if (values[i].includes(value)) {
+        if (this.isSimilar(values[i], value)) {
             return true;
         }
     }
     return false;
 }
 
+const isArray = function (bechecked) {
+    return Array.isArray(bechecked);
+}
+
 module.exports = {
     formatTime: formatTime,
     isSimilar: isSimilar,
-    imply: imply
+    implies: implies,
+    isArray: isArray
 }
