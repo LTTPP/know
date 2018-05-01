@@ -75,7 +75,14 @@ Page({
                 pathToPhoto: pathToFile
             });
             logger.log('page index data', that.data);
-        })().catch(err => logger.err('ERROR', err));
+        })().catch(err => {
+            wx.hideLoading();
+            logger.err('ERROR', err);
+            that.setData({
+                result: '发生错误，请重试',
+                pathToPhoto: pathToFile
+            });
+        });
     },
 
     showLogs: function () {
