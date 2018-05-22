@@ -5,8 +5,13 @@ const logger = require('../utils/logger.js');
 //更好的做法是把这些信息放到服务器进行签名，防止信息泄露
 const auth = require('./auth/orization.js');
 
-const region = 'oss-cn-beijing';
+const region = 'cn-beijing';
 const bucket = 'wit-bkt';
+
+const aliHost = `${auth.accountID}.${region}.fc.aliyuncs.com`;
+const ossUrl = `https://${bucket}.oss-${region}.aliyuncs.com`;
+const fcUrl = `https://${auth.accountID}.${region}.fc.aliyuncs.com/2016-08-15/services/Wit/functions/tobase64/invocations`;
+const fcPath = '/2016-08-15/services/Wit/functions/tobase64/invocations';
 
 const uploadFile = function (pathToFile) {
     return new Promise((resolve, reject) => {
@@ -22,7 +27,7 @@ const uploadFile = function (pathToFile) {
         const alicloudObjectKey = new Date().getTime() + '' + Math.random();
         logger.log('alicloud ObjectKey', alicloudObjectKey);
         wx.uploadFile({
-            url: `https://${bucket}.${region}.aliyuncs.com`,
+            url: ossUrl,
             filePath: pathToFile,
             name: 'file',
             formData: {
@@ -51,16 +56,16 @@ const uploadFile = function (pathToFile) {
 const tobase64 = function (objectKey) {
     let reqData = JSON.stringify({key: objectKey});
     let headers = {
-        'Host': '1996421133443888.cn-beijing.fc.aliyuncs.com',
+        'Host': aliHost,
         'Date': new Date().toGMTString(),
         'Content-Type': 'application/json',
         'Content-Length': reqData.length
     };
-    headers['Authorization'] = auth.fc.authorization('POST', '/2016-08-15/services/Wit/functions/tobase64/invocations', headers);
+    headers['Authorization'] = auth.fc.authorization('POST', fcPath, headers);
 
     return new Promise((resolve, reject) => {
         wx.request({
-            url: 'https://1996421133443888.cn-beijing.fc.aliyuncs.com/2016-08-15/services/Wit/functions/tobase64/invocations',
+            url: fcUrl,
             method: 'POST',
             header: headers,
             data: reqData,
