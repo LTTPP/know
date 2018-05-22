@@ -3,7 +3,7 @@
   <view class="result">
     <block wx:if="{{result}}">
       <image style="width: 300px; height: 300px;" mode="aspectFit" src="{{pathToPhoto}}"></image>
-      <text bindtap="showLogs" class="result-fr-name">{{result}}</text>
+      <text bindtap="showLogs" class="result-fr-name">“{{result}}”</text>
     </block>
   </view>
   <view wx:if="{{result}}" class="camera">

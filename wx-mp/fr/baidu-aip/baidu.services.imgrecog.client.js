@@ -54,13 +54,13 @@ const onResult = function (results) {
                 if (util.isSimilar(result1.name, result2.name)) {
                     return `应该是${normalize(result1.name)}`;
                 }
-                return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}`;
+                return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
             } else {
                 if (implies(results, result2.name, 1)) {
                     if (util.isSimilar(result1.name, result2.name)) {
                         return `应该是${normalize(result1.name)}`;
                     }
-                    return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}`;
+                    return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
                 }
                 return `应该是${normalize(result1.name)}`;
             }
@@ -69,7 +69,7 @@ const onResult = function (results) {
             if (implies(results, result1.name, 0) && util.isSimilar(result1.name, result2.name)) {
                 return `应该是${normalize(result1.name)}`;
             }
-            return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}`;
+            return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
         }
     } else {
         return '没有结果返回，要不再试试';
@@ -77,7 +77,7 @@ const onResult = function (results) {
 };
 
 const normalize = function (name) {
-    return name.replace('洛阳牡丹', '牡丹').replace('红鸡蛋花', '鸡蛋花');
+    return name.replace('洛阳牡丹', '牡丹').replace('红鸡蛋花', '鸡蛋花').trim();
 };
 
 const implies = function (results, name, self) {
