@@ -5,7 +5,7 @@ const ali = require('../../alicloud/ali.services.tobase64.client.js');
 const baidu = require('../../baidu-aip/baidu.services.imgrecog.client.js');
 
 //获取应用实例
-const app = getApp();
+app = getApp(); // This is a special case.
 
 Page({
     data: {
