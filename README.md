@@ -6,7 +6,7 @@
 
 A WeChat mini app to recognize what plants are in the picture.
 
-<img src="./assets/fr_use_screenshot.jpg" width="300" height="826" />
+<img src="./assets/fr_use_screenshot.jpg" width="320" height="826" />
 
 ### How to get
 
