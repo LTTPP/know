@@ -8,6 +8,4 @@ A WeChat mini app to recognize what plants are in the picture.
 
 #### About the logo
 
-<img src="./assets/wx-mp_fr_512x512.png" width="50" height="50" />
-
-<div><a href="https://www.flaticon.com/free-icon/lotus_129362" title="Lotus">Logo</a> made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+<img src="./assets/wx-mp_fr_512x512.png" width="50" height="50" /> <div><a href="https://www.flaticon.com/free-icon/lotus_129362" title="Lotus">Logo</a> made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
