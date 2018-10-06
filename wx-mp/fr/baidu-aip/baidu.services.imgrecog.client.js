@@ -50,28 +50,32 @@ const onResult = function (results) {
             } else if (result1.score >= 0.9) {
                 return `无疑是${normalize(result1.name)}`;
             }
-        } else if (result1.score >= 0.4) {
+        } else {
             let result2 = results[1];
-            if (result1.score - result2.score < 0.15) {
-                if (util.isSimilar(result1.name, result2.name)) {
-                    return `应该是${normalize(result1.name)}`;
-                }
-                return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
-            } else {
-                if (implies(results, result2.name, 1)) {
+            if(!result2) {
+                return `应该是${normalize(result1.name)}`;
+            }
+            if (result1.score >= 0.4) {
+                if (result1.score - result2.score < 0.15) {
                     if (util.isSimilar(result1.name, result2.name)) {
                         return `应该是${normalize(result1.name)}`;
                     }
                     return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
+                } else {
+                    if (implies(results, result2.name, 1)) {
+                        if (util.isSimilar(result1.name, result2.name)) {
+                            return `应该是${normalize(result1.name)}`;
+                        }
+                        return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
+                    }
+                    return `应该是${normalize(result1.name)}`;
                 }
-                return `应该是${normalize(result1.name)}`;
+            } else {
+                if (implies(results, result1.name, 0) && util.isSimilar(result1.name, result2.name)) {
+                    return `应该是${normalize(result1.name)}`;
+                }
+                return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
             }
-        } else {
-            let result2 = results[1];
-            if (implies(results, result1.name, 0) && util.isSimilar(result1.name, result2.name)) {
-                return `应该是${normalize(result1.name)}`;
-            }
-            return `可能是${normalize(result1.name)}，也有可能是${normalize(result2.name)}；要不换个角度再试试`;
         }
     } else {
         return '没有结果返回，要不再试试';
