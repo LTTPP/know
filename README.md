@@ -6,6 +6,8 @@
 
 A WeChat mini app to recognize what plants are in the picture.
 
+![Screenshots](./assets/fr_use_screenshot.jpg)
+
 ### How to get
 
 **Scan QR code**
