@@ -16,7 +16,7 @@ A WeChat mini app to recognize what plants are in the picture.
 
 **Find in WeChat**
 
-![QR code](./assets/fr_find2.png)
+<img src="./assets/fr_find2.png" width="640" />
 
 ### About the logo
 
