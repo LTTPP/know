@@ -8,7 +8,11 @@ A WeChat mini app to recognize what plants are in the picture.
 
 ### How to get
 
-Scan the QR code.
+#### QR code
+
+Scan the QR code:
+
+![QR code](./assets/fr_qr.jpg)
 
 ### About the logo
 
