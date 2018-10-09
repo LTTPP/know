@@ -16,7 +16,7 @@ const accountID = "{accountID}";
 const accessKeyId = "{accessKeyId}";
 const accessKeySecret = "{accessKeySecret}";
 
-const timeout = 87600;
+const timeout = 10/*Years*/ * 365/*Days*/ * 24/*Hours*/; // 10 years expressed in hours
 const fileSizeLimit = 5 * 1024 * 1024; // 设置上传文件的大小限制5MB
 
 const signature4Oss = function () {
