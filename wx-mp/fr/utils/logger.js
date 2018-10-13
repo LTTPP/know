@@ -5,7 +5,7 @@ const log = (title, details) => {
         if (!app.logs) {
             app.logs = []
         }
-        app.logs.push('[' + util.formatTime(new Date()) + '] ' + (title || '') + ' ' + JSON.stringify(details))
+        app.logs.push('[' + util.formatTime(new Date()) + '] ' + (title || '') + ' ' + util.stringify(details))
     }
     console.log('[' + util.formatTime(new Date()) + ']', title || '', details || '')
 }
@@ -15,7 +15,7 @@ const err = (title, details) => {
         if (!app.logs) {
             app.logs = []
         }
-        app.logs.push('[' + util.formatTime(new Date()) + '] ' + (title || '') + ' ' + JSON.stringify(details))
+        app.logs.push('[' + util.formatTime(new Date()) + '] ' + (title || '') + ' ' + util.stringify(details))
     }
     console.error('[' + util.formatTime(new Date()) + ']', title || '', details || '')
 }

@@ -41,9 +41,18 @@ const isArray = function (bechecked) {
     return Array.isArray(bechecked);
 }
 
+const stringify = function (bestringified) {
+    if(bestringified) {
+        return JSON.stringify(bestringified)
+    } else {
+        return '';
+    }
+}
+
 module.exports = {
     formatTime: formatTime,
     isSimilar: isSimilar,
     implies: implies,
-    isArray: isArray
+    isArray: isArray,
+    stringify: stringify
 }
