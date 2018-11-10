@@ -25,7 +25,7 @@ const uploadFile = function (pathToFile) {
         }
 
         const alicloudObjectKey = new Date().getTime() + '' + Math.random();
-        logger.log('alicloud ObjectKey', alicloudObjectKey);
+        logger.log('Ali services file upload object key', alicloudObjectKey);
         wx.uploadFile({
             url: ossUrl,
             filePath: pathToFile,
