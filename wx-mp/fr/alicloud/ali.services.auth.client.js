@@ -32,20 +32,20 @@ const get = function (objectKey, validator, join) {
             data: reqData,
             success: resp => {
                 if (resp.statusCode !== 200) {
-                    logger.err('ali.services.auth fail', resp);
+                    logger.err('Ali services auth fail', resp);
                     return reject(resp);
                 }
-                logger.log('ali.services.auth success', resp.data);
+                logger.log('Ali services auth success', resp.data);
                 if(validator(resp.data)) {
                     join(resp.data);
                     resolve(resp.data);
                 } else {
-                    logger.err('ali.services.auth fail', 'validation fail');
-                    reject('ali.services.auth fail: validation fail');
+                    logger.err('Ali services auth fail', 'token validation fail');
+                    reject('Ali services auth fail: token validation fail');
                 }
             },
             fail: function (err) {
-                logger.err('ali.services.auth fail', err);
+                logger.err('Ali services auth fail', err);
                 reject(err);
             }
         });

@@ -6,7 +6,7 @@ const logger = require('../../utils/logger.js');
 
 const accessToken = function () {
     let token = wx.getStorageSync('baidu-access_token');
-    logger.log('get baidu access token from local storage', token);
+    logger.log('Baidu get access token from local storage', token);
     if (isValidToken(token)) {
         return new Promise((resolve, reject) => {
             resolve(token);
@@ -20,10 +20,10 @@ function setStorage(token) {
         key: 'baidu-access_token',
         data: token,
         fail: function (err) {
-            logger.err('failed to cache baidu access token to local storage', err);
+            logger.err('Baidu caching access token to local storage fail', err);
         }
     });
-    logger.log('set baidu access token to local storage', token);
+    logger.log('Baidu set access token to local storage', token);
 }
 
 function isValidToken(token) {
@@ -34,7 +34,7 @@ function isValidToken(token) {
     if(Date.now() > t.expires_in) {
         return false;
     }
-    logger.log('access token is valid');
+    logger.log('Baidu access token is valid');
     return true;
 }
 

@@ -19,18 +19,18 @@ const recognize = function (b64str) {
             data: `image=${image}`,
             success: resp => {
                 if (resp.statusCode !== 200) {
-                    logger.err('image recognition fail', resp);
+                    logger.err('Baidu image recognition fail', resp);
                     return reject(resp);
                 }
                 if (resp.data && resp.data.error_code) {
-                    logger.err('image recognition fail', resp);
+                    logger.err('Baidu image recognition fail', resp);
                     return reject(resp);
                 }
-                logger.log('image recognition success', resp);
+                logger.log('Baidu image recognition success', resp);
                 resolve(onResult(resp.data && resp.data.result));
             },
             fail: function (err) {
-                logger.err('image recognition fail', err);
+                logger.err('Baidu image recognition fail', err);
                 reject(err);
             }
         });

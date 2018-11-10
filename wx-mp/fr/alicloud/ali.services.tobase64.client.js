@@ -39,14 +39,14 @@ const uploadFile = function (pathToFile) {
             },
             success: function (resp) {
                 if (resp.statusCode !== 200) {
-                    logger.err('file upload fail', resp);
+                    logger.err('Ali services file upload fail', resp);
                     return reject(resp);
                 }
-                logger.log('file upload success');
+                logger.log('Ali services file upload success');
                 resolve(alicloudObjectKey);
             },
             fail: function (err) {
-                logger.err('file upload fail', err);
+                logger.err('Ali services file upload fail', err);
                 reject(err);
             }
         });
@@ -71,14 +71,14 @@ const tobase64 = function (objectKey) {
             data: reqData,
             success: resp => {
                 if (resp.statusCode !== 200) {
-                    logger.err('base64 encoding fail', resp);
+                    logger.err('Ali services base64 encoding fail', resp);
                     return reject(resp);
                 }
-                logger.log('base64 encoding success');
+                logger.log('Ali services base64 encoding success');
                 resolve(resp.data);
             },
             fail: function (err) {
-                logger.err('base64 encoding fail', err);
+                logger.err('Ali services base64 encoding fail', err);
                 reject(err);
             }
         });
