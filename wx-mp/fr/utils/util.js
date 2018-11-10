@@ -49,10 +49,19 @@ const stringify = function (bestringified) {
     }
 }
 
+function isString(bechecked) {
+    return typeof bechecked === 'string' && bechecked.constructor === String || Object.prototype.toString.apply(bechecked) === '[object String]' || bechecked instanceof String;
+}
+
+function parse(value) {
+    return isString(value) ? JSON.parse(value) : value;
+}
+
 module.exports = {
     formatTime: formatTime,
     isSimilar: isSimilar,
     implies: implies,
     isArray: isArray,
-    stringify: stringify
+    stringify: stringify,
+    parse: parse
 }

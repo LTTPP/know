@@ -4,13 +4,14 @@ const logger = require('../utils/logger.js');
 const util = require('../utils/util.js');
 const auth = require('./auth/orization');
 
-const baiduUrl = `https://aip.baidubce.com/rest/2.0/image-classify/v1/plant?access_token=${auth.access_token}`;
+const baiduUrl = 'https://aip.baidubce.com/rest/2.0/image-classify/v1/plant';
 
 const recognize = function (b64str) {
     return new Promise((resolve, reject) => {
         let image = encodeURIComponent(b64str);
+        auth.accessToken().then(token => {
         wx.request({
-            url: baiduUrl,
+            url: `${baiduUrl}?access_token=${util.parse(token).access_token}`,
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,6 +33,7 @@ const recognize = function (b64str) {
                 logger.err('image recognition fail', err);
                 reject(err);
             }
+        });
         });
     });
 };
