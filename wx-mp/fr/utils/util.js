@@ -42,7 +42,7 @@ const isArray = function (bechecked) {
 }
 
 const stringify = function (bestringified) {
-    if(bestringified) {
+    if(bestringified && !isString(bestringified)) {
         return JSON.stringify(bestringified)
     } else {
         return '';
