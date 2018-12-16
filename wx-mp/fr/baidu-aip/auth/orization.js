@@ -28,10 +28,12 @@ function setStorage(token) {
 
 function isValidToken(token) {
     if(!token) {
+        logger.log('Baidu access token is null');
         return false;
     }
     var t = util.parse(token);
     if(Date.now() > t.expires_in) {
+        logger.log('Baidu access token is expired');
         return false;
     }
     logger.log('Baidu access token is valid');

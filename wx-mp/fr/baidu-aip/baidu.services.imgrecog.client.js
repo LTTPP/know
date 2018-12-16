@@ -34,6 +34,8 @@ const recognize = function (b64str) {
                 reject(err);
             }
         });
+        }).catch(err => {
+            reject(err);
         });
     });
 };
