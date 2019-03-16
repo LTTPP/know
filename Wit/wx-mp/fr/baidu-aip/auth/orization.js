@@ -32,8 +32,12 @@ function isValidToken(token) {
         return false;
     }
     var t = util.parse(token);
-    if(Date.now() > t.expires_in) {
+    if(t.expires_in && (Date.now() > t.expires_in)) {
         logger.log('Baidu access token is expired');
+        return false;
+    }
+    if (!t.access_token) {
+        console.log('kauth', 'access token is missing');
         return false;
     }
     logger.log('Baidu access token is valid');

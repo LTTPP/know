@@ -8,8 +8,8 @@ const auth = require('./auth/orization.js');
 const region = 'cn-beijing';
 
 const aliHost = `${auth.accountID}.${region}.fc.aliyuncs.com`;
-const fcUrl = `https://${auth.accountID}.${region}.fc.aliyuncs.com/2016-08-15/services/Wit/functions/auth/invocations`;
-const fcPath = '/2016-08-15/services/Wit/functions/auth/invocations';
+const fcUrl = `https://${auth.accountID}.${region}.fc.aliyuncs.com/2016-08-15/services/Wit/functions/kauth/invocations`;
+const fcPath = '/2016-08-15/services/Wit/functions/kauth/invocations';
 
 const get = function (objectKey, validator, join) {
     if(!objectKey) {

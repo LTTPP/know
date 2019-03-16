@@ -5,10 +5,11 @@
 		"es6": false,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.5.2",
 	"appid": "wx387b69719d1354f8",
 	"projectname": "wx-mp-fr",
 	"isGameTourist": false,
